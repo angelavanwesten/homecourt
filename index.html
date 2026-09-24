@@ -1,76 +1,28 @@
 <!doctype html>
 <html lang="nl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HOMECOURT v2 — Mijn plattegrond</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07100d"><title>HOMECOURT — Public Gym</title>
 <style>
-:root{--bg:#07100d;--panel:#0f1c16;--panel2:#14241c;--line:#294036;--text:#f4f7f5;--muted:#9caba3;--green:#55f08d}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}.app{max-width:1200px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.logo{font-weight:900;font-size:25px}.logo span{color:var(--green)}.badge{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px}
-.layout{display:grid;grid-template-columns:1fr 330px;gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px}.kicker{font-size:11px;color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:1.4px}.muted{color:var(--muted)}
-.plan{position:relative;min-height:620px;background:#dfe5df;border-radius:18px;padding:28px;overflow:hidden}.house{height:560px;max-width:760px;margin:auto;position:relative;background:#fff;border:8px solid #333;box-shadow:0 12px 35px #0004}
-.room{position:absolute;background:#f7faf7;border:3px solid #333;color:#162019;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;cursor:pointer;transition:.15s}.room:hover{background:#e6f8ec}.room.selected{outline:5px solid var(--green);z-index:4;background:#effff4}.room small{display:block;font-weight:500;color:#64736b;margin-top:5px}
-.r1{left:0;top:0;width:48%;height:36%}.r2{right:0;top:0;width:52%;height:36%}.r3{left:0;top:36%;width:57%;height:40%}.r4{right:0;top:36%;width:43%;height:40%}.r5{left:0;bottom:0;width:35%;height:24%}.r6{left:35%;bottom:0;width:33%;height:24%}.r7{right:0;bottom:0;width:32%;height:24%}
-.tools{display:grid;gap:10px}.tool{border:1px solid var(--line);background:var(--panel2);padding:13px;border-radius:14px;cursor:pointer}.tool.active{border-color:var(--green)}.tool b{display:block}.tool span{font-size:12px;color:var(--muted)}
-button{border:0;border-radius:13px;padding:13px 15px;font-weight:800;cursor:pointer}.primary{background:var(--green);color:#06100b}.secondary{background:#1a2b23;color:white;border:1px solid var(--line);width:100%}.actions{display:grid;gap:9px;margin-top:15px}.stat{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.stat:last-child{border-bottom:0}.score{font-size:42px;color:var(--green);font-weight:900}.tip{background:#12291c;border:1px solid #275b3b;padding:13px;border-radius:14px;margin-top:14px;line-height:1.45;font-size:13px}.upload{border:1px dashed #426050;border-radius:14px;padding:15px;text-align:center;margin-top:12px;color:var(--muted);cursor:pointer}.hidden{display:none}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.plan{min-height:470px;padding:16px}.house{height:430px}.app{padding:12px}}
-</style>
-</head>
-<body>
-<div class="app">
-<header class="top"><div class="logo">HOME<span>COURT</span></div><div class="badge">v2 • interactieve plattegrond</div></header>
-<div class="layout">
-<section class="card">
-<div class="kicker">Mijn huis</div>
-<h1>Sportieve plattegrond</h1>
-<p class="muted">Klik op een ruimte. Kies daarna wat je ermee wilt doen.</p>
-<div class="plan"><div class="house">
-<div class="room r1" data-room="Woonkamer" onclick="selectRoom(this)">Woonkamer<small>28 m²</small></div>
-<div class="room r2" data-room="Keuken" onclick="selectRoom(this)">Keuken<small>16 m²</small></div>
-<div class="room r3" data-room="Garage" onclick="selectRoom(this)">Garage<small>18 m²</small></div>
-<div class="room r4" data-room="Slaapkamer" onclick="selectRoom(this)">Slaapkamer<small>14 m²</small></div>
-<div class="room r5" data-room="Hal" onclick="selectRoom(this)">Hal</div>
-<div class="room r6" data-room="Badkamer" onclick="selectRoom(this)">Badkamer<small>8 m²</small></div>
-<div class="room r7" data-room="Zolder" onclick="selectRoom(this)">Zolder<small>12 m²</small></div>
-</div></div>
-</section>
-
-<aside class="card">
-<div class="kicker">Ruimteplanner</div>
-<h2 id="selectedTitle">Selecteer een ruimte</h2>
-<p id="selectedText" class="muted">Klik links op bijvoorbeeld je garage.</p>
-<div class="tools">
-<div class="tool" onclick="choose('Gym')"><b>🏋️ Gym</b><span>Kracht, cardio en vrije ruimte</span></div>
-<div class="tool" onclick="choose('Fietsen')"><b>🚴 Fietsen</b><span>Stalling, onderhoud en indoor training</span></div>
-<div class="tool" onclick="choose('Herstel')"><b>🧘 Herstel</b><span>Yoga, mobility en recovery</span></div>
-<div class="tool" onclick="choose('Sport')"><b>⚽ Sport</b><span>Multifunctionele sport-/spelhoek</span></div>
-</div>
-<div id="stats" style="margin-top:15px"></div>
-<div id="tip"></div>
-<div class="actions"><button class="primary" onclick="applyPlan()">✓ Gebruik dit ontwerp</button><button class="secondary" onclick="resetPlan()">Reset selectie</button></div>
-<label class="upload">📐 Upload straks je echte bouwtekening<input id="file" class="hidden" type="file" accept="image/*,.pdf" onchange="fileChosen()"></label>
-<p id="fileName" class="muted" style="font-size:12px"></p>
-</aside>
-</div>
+:root{--bg:#07100d;--p:#101c16;--p2:#15251e;--line:#294036;--t:#f4f7f5;--m:#9eaca5;--g:#55f08d}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(150deg,#07100d,#0c1712);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{max-width:1100px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;align-items:center}.logo{font-size:25px;font-weight:900}.logo span{color:var(--g)}.pill{color:var(--g);border:1px solid #2b6343;border-radius:999px;padding:7px 10px;font-size:12px}
+.hero{margin:16px 0;padding:26px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 10%,#19422d,transparent 40%),#102019}.k{color:var(--g);font-size:11px;font-weight:900;letter-spacing:1.5px}.hero h1{font-size:clamp(34px,7vw,62px);line-height:1;margin:8px 0}.hero p{color:var(--m);max-width:650px;line-height:1.6}.grid{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}.card{background:var(--p);border:1px solid var(--line);border-radius:20px;padding:18px}.machines{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.machine{padding:15px;background:var(--p2);border:1px solid var(--line);border-radius:15px;cursor:pointer}.machine.active{border-color:var(--g);box-shadow:0 0 0 2px #55f08d22}.machine .emoji{font-size:27px}.muted{color:var(--m);font-size:13px}.meter{height:9px;background:#203027;border-radius:20px;overflow:hidden}.meter i{display:block;height:100%;background:var(--g)}.row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}.score{font-size:44px;font-weight:900;color:var(--g)}button{border:0;border-radius:13px;padding:13px 15px;font-weight:900;cursor:pointer}.primary{background:var(--g);color:#06100b;width:100%}.secondary{background:#182a21;color:#fff;border:1px solid var(--line);width:100%;margin-top:8px}.challenge{margin-top:14px;padding:14px;background:#122a1c;border:1px solid #285e3e;border-radius:14px}.nav{display:flex;gap:8px;margin:14px 0;overflow:auto}.nav button{background:var(--p);color:var(--m);border:1px solid var(--line);white-space:nowrap}.nav button.active{color:var(--g);border-color:#39754f;background:#173323}@media(max-width:760px){.grid{grid-template-columns:1fr}.machines{grid-template-columns:1fr 1fr}}
+</style></head>
+<body><div class="app">
+<header class="top"><div class="logo">HOME<span>COURT</span></div><div class="pill">PUBLIC GYM</div></header>
+<nav class="nav"><button class="active">🏋️ Gym</button><button onclick="alert('Binnenkort: Home Gym Planner')">🏠 Home Gym</button><button onclick="alert('Binnenkort: Challenges')">🔥 Challenges</button><button onclick="alert('Binnenkort: Community')">👥 Community</button></nav>
+<section class="hero"><div class="k">PUBLIC GYM</div><h1>Build your workout.</h1><p>Kies je apparatuur, stel je ideale training samen en bouw punten op. Dit is de openbare HOMECOURT-omgeving — zonder persoonlijke woningen of bouwtekeningen.</p></section>
+<div class="grid"><section class="card"><h2>Kies je focus</h2><p class="muted">Tik apparatuur aan die je in jouw ideale gym wilt hebben.</p><div class="machines" id="machines"></div></section>
+<aside class="card"><div class="k">JOUW GYM SCORE</div><div class="score" id="score">0</div><p class="muted">Op basis van je gekozen apparatuur.</p><div class="row"><span>Kracht</span><b id="kracht">0%</b></div><div class="meter"><i id="kb" style="width:0%"></i></div><div class="row"><span>Conditie</span><b id="cond">0%</b></div><div class="meter"><i id="cb" style="width:0%"></i></div><div class="row"><span>Mobiliteit</span><b id="mob">0%</b></div><div class="meter"><i id="mb" style="width:0%"></i></div><div class="challenge"><b>🔥 Gym Builder Challenge</b><p class="muted">Kies 4 onderdelen en maak je ideale gym compleet.</p><b id="progress">0 / 4</b></div><br><button class="primary" onclick="save()">✓ Bewaar mijn gym</button><button class="secondary" onclick="clearAll()">Reset</button></aside></div>
 </div>
 <script>
-let selected=null, choice=null, plans=JSON.parse(localStorage.getItem('hc_plans')||'{}');
-const info={
-Gym:{score:9,space:'Vrije ruimte rond apparaten: ±1,5 m',items:'Squat rack • dumbbells • mat • spiegel',tip:'Voor een garage van 18 m² past een compacte full-body gym goed, met ruimte voor fietsen langs één wand.'},
-Fietsen:{score:9,space:'Stalling + werkzone: ±5–7 m²',items:'Fietshaken • werkbank • pomp • indoor trainer',tip:'Zet fietsen verticaal tegen de wand en houd een vrije onderhoudszone over.'},
-Herstel:{score:8,space:'Vrije vloer: ±8 m²',items:'Mat • foam roller • spiegel • opberging',tip:'Een rustige hoek met daglicht is ideaal voor mobility en herstel.'},
-Sport:{score:7,space:'Vrije speelruimte: afhankelijk van sport',items:'Opberging • zachte vloer • doel/net',tip:'Kies multifunctionele materialen zodat de ruimte later makkelijk verandert.'}
-};
-function selectRoom(el){document.querySelectorAll('.room').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');selected=el.dataset.room;choice=plans[selected]||null;document.getElementById('selectedTitle').textContent=selected;document.getElementById('selectedText').textContent='Kies een sportfunctie voor deze ruimte.';render()}
-function choose(c){if(!selected){alert('Selecteer eerst een ruimte.');return}choice=c;render()}
-function render(){
- if(!selected)return;
- const d=info[choice||'Gym']; 
- document.getElementById('stats').innerHTML=choice?`<div class="stat"><span>Sportscore</span><b class="score">${d.score}/10</b></div><div class="stat"><span>Ruimteadvies</span><b style="text-align:right;max-width:190px">${d.space}</b></div><div class="stat"><span>Benodigd</span><b style="text-align:right;max-width:190px">${d.items}</b></div>`:'';
- document.getElementById('tip').innerHTML=choice?`<div class="tip">💡 ${d.tip}</div>`:'';
-}
-function applyPlan(){if(!selected||!choice){alert('Kies eerst een ruimte en een sportfunctie.');return}plans[selected]=choice;localStorage.setItem('hc_plans',JSON.stringify(plans));alert(`${selected} is ingericht als ${choice}.`);render()}
-function resetPlan(){selected=null;choice=null;document.querySelectorAll('.room').forEach(x=>x.classList.remove('selected'));document.getElementById('selectedTitle').textContent='Selecteer een ruimte';document.getElementById('selectedText').textContent='Klik links op bijvoorbeeld je garage.';document.getElementById('stats').innerHTML='';document.getElementById('tip').innerHTML=''}
-function fileChosen(){const f=document.getElementById('file').files[0];document.getElementById('fileName').textContent=f?'Gekozen: '+f.name:''}
-</script>
-</body></html>
+const items=[
+['🏋️','Squat rack','kracht',3],['💪','Dumbbells','kracht',2],['🛋️','Bench','kracht',2],['🚴','Bike','cond',3],['🏃','Treadmill','cond',3],['🚣','Rower','cond',3],['🧘','Mat','mob',2],['🪞','Mobility zone','mob',2]
+];
+let chosen=JSON.parse(localStorage.getItem('hc_public_gym')||'[]');
+function render(){document.getElementById('machines').innerHTML=items.map((x,i)=>`<div class="machine ${chosen.includes(i)?'active':''}" onclick="toggle(${i})"><div class="emoji">${x[0]}</div><b>${x[1]}</b><div class="muted">${x[2]==='kracht'?'Kracht':x[2]==='cond'?'Conditie':'Mobiliteit'}</div></div>`).join('');let sums={kracht:0,cond:0,mob:0};chosen.forEach(i=>sums[items[i][2]]+=items[i][3]);let total=Math.min(10,Math.round((sums.kracht+sums.cond+sums.mob)/2));document.getElementById('score').textContent=total+'/10';let k=Math.min(100,sums.kracht*12),c=Math.min(100,sums.cond*12),m=Math.min(100,sums.mob*20);for(const [id,v] of [['kracht',k],['cond',c],['mob',m]]){document.getElementById(id).textContent=v+'%';document.getElementById(id[0]+'b').style.width=v+'%'}document.getElementById('progress').textContent=Math.min(4,chosen.length)+' / 4'}
+function toggle(i){chosen=chosen.includes(i)?chosen.filter(x=>x!==i):[...chosen,i];render()}
+function save(){localStorage.setItem('hc_public_gym',JSON.stringify(chosen));alert('Je gym is opgeslagen op dit apparaat.')}
+function clearAll(){chosen=[];localStorage.removeItem('hc_public_gym');render()}
+render()
+</script></body></html>
