@@ -1,28 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07100d"><title>HOMECOURT — Public Gym</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOMECOURT — Bouw je huis. Bouw je fitste leven.</title>
 <style>
-:root{--bg:#07100d;--p:#101c16;--p2:#15251e;--line:#294036;--t:#f4f7f5;--m:#9eaca5;--g:#55f08d}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(150deg,#07100d,#0c1712);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{max-width:1100px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;align-items:center}.logo{font-size:25px;font-weight:900}.logo span{color:var(--g)}.pill{color:var(--g);border:1px solid #2b6343;border-radius:999px;padding:7px 10px;font-size:12px}
-.hero{margin:16px 0;padding:26px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(circle at 85% 10%,#19422d,transparent 40%),#102019}.k{color:var(--g);font-size:11px;font-weight:900;letter-spacing:1.5px}.hero h1{font-size:clamp(34px,7vw,62px);line-height:1;margin:8px 0}.hero p{color:var(--m);max-width:650px;line-height:1.6}.grid{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}.card{background:var(--p);border:1px solid var(--line);border-radius:20px;padding:18px}.machines{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.machine{padding:15px;background:var(--p2);border:1px solid var(--line);border-radius:15px;cursor:pointer}.machine.active{border-color:var(--g);box-shadow:0 0 0 2px #55f08d22}.machine .emoji{font-size:27px}.muted{color:var(--m);font-size:13px}.meter{height:9px;background:#203027;border-radius:20px;overflow:hidden}.meter i{display:block;height:100%;background:var(--g)}.row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}.score{font-size:44px;font-weight:900;color:var(--g)}button{border:0;border-radius:13px;padding:13px 15px;font-weight:900;cursor:pointer}.primary{background:var(--g);color:#06100b;width:100%}.secondary{background:#182a21;color:#fff;border:1px solid var(--line);width:100%;margin-top:8px}.challenge{margin-top:14px;padding:14px;background:#122a1c;border:1px solid #285e3e;border-radius:14px}.nav{display:flex;gap:8px;margin:14px 0;overflow:auto}.nav button{background:var(--p);color:var(--m);border:1px solid var(--line);white-space:nowrap}.nav button.active{color:var(--g);border-color:#39754f;background:#173323}@media(max-width:760px){.grid{grid-template-columns:1fr}.machines{grid-template-columns:1fr 1fr}}
-</style></head>
-<body><div class="app">
-<header class="top"><div class="logo">HOME<span>COURT</span></div><div class="pill">PUBLIC GYM</div></header>
-<nav class="nav"><button class="active">🏋️ Gym</button><button onclick="alert('Binnenkort: Home Gym Planner')">🏠 Home Gym</button><button onclick="alert('Binnenkort: Challenges')">🔥 Challenges</button><button onclick="alert('Binnenkort: Community')">👥 Community</button></nav>
-<section class="hero"><div class="k">PUBLIC GYM</div><h1>Build your workout.</h1><p>Kies je apparatuur, stel je ideale training samen en bouw punten op. Dit is de openbare HOMECOURT-omgeving — zonder persoonlijke woningen of bouwtekeningen.</p></section>
-<div class="grid"><section class="card"><h2>Kies je focus</h2><p class="muted">Tik apparatuur aan die je in jouw ideale gym wilt hebben.</p><div class="machines" id="machines"></div></section>
-<aside class="card"><div class="k">JOUW GYM SCORE</div><div class="score" id="score">0</div><p class="muted">Op basis van je gekozen apparatuur.</p><div class="row"><span>Kracht</span><b id="kracht">0%</b></div><div class="meter"><i id="kb" style="width:0%"></i></div><div class="row"><span>Conditie</span><b id="cond">0%</b></div><div class="meter"><i id="cb" style="width:0%"></i></div><div class="row"><span>Mobiliteit</span><b id="mob">0%</b></div><div class="meter"><i id="mb" style="width:0%"></i></div><div class="challenge"><b>🔥 Gym Builder Challenge</b><p class="muted">Kies 4 onderdelen en maak je ideale gym compleet.</p><b id="progress">0 / 4</b></div><br><button class="primary" onclick="save()">✓ Bewaar mijn gym</button><button class="secondary" onclick="clearAll()">Reset</button></aside></div>
-</div>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f5f7;color:#101318}
+header{background:#11151b;color:white;padding:18px 20px;position:sticky;top:0;z-index:10}
+.brand{font-size:25px;font-weight:900;letter-spacing:-1px}.tag{font-size:12px;color:#aeb6c2;margin-top:2px}
+nav{display:flex;gap:8px;overflow:auto;margin-top:16px;padding-bottom:2px}nav button{border:0;background:#252b34;color:#dce1e7;padding:10px 13px;border-radius:12px;white-space:nowrap;font-weight:700}nav button.active{background:#fff;color:#111}
+main{max-width:1100px;margin:auto;padding:22px 16px 60px}.page{display:none}.page.active{display:block}
+.hero{background:#11151b;color:#fff;border-radius:24px;padding:28px;margin-bottom:18px}.hero h1{font-size:38px;line-height:1;margin:0 0 10px}.hero p{color:#c7ced8;max-width:650px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.card{background:white;border:1px solid #e1e4e8;border-radius:18px;padding:18px;box-shadow:0 4px 16px #00000008}.card h3{margin:5px 0 8px}.muted{color:#69717d;font-size:14px;line-height:1.45}.big{font-size:34px;font-weight:900}.pill{display:inline-block;background:#eef0f3;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800;margin:3px}
+button.primary{background:#11151b;color:#fff;border:0;padding:12px 16px;border-radius:12px;font-weight:800}
+.section-title{margin:26px 0 12px}.section-title h2{margin:0}.section-title p{margin:5px 0;color:#69717d}
+.floor{background:#fff;border:1px solid #dfe3e8;border-radius:20px;padding:16px;position:relative;min-height:360px}
+.plan{height:300px;border:5px solid #222;background:#f9fafb;position:relative;max-width:720px;margin:auto}
+.room{position:absolute;border:2px solid #222;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:800;padding:6px;cursor:pointer}
+.room:hover{background:#eef2f5}.r1{left:0;top:0;width:45%;height:48%}.r2{left:45%;top:0;width:55%;height:48%}.r3{left:0;top:48%;width:30%;height:52%}.r4{left:30%;top:48%;width:38%;height:52%}.r5{left:68%;top:48%;width:32%;height:52%}
+.list{display:grid;gap:9px}.equip{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #e1e4e8;border-radius:13px;background:#fff}.equip input{width:20px;height:20px}
+.bar{height:10px;background:#e7eaee;border-radius:20px;overflow:hidden}.fill{height:100%;background:#11151b;border-radius:20px}
+.challenge{display:flex;justify-content:space-between;align-items:center;gap:12px}.done{background:#e9f7ed}
+table{width:100%;border-collapse:collapse;background:white;border-radius:15px;overflow:hidden}td,th{padding:12px;text-align:left;border-bottom:1px solid #e8eaed}th{font-size:12px;color:#69717d}
+footer{text-align:center;color:#7a828d;padding:20px}
+@media(max-width:600px){.hero h1{font-size:31px}.plan{height:260px}.room{font-size:10px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">HOMECOURT</div>
+  <div class="tag">Bouw je huis. Bouw je fitste leven.</div>
+  <nav id="nav"></nav>
+</header>
+
+<main>
+<section id="overview" class="page active">
+ <div class="hero"><h1>Van huis naar HOMECOURT.</h1><p>Plan je woning rondom de manier waarop je wilt leven, sporten en herstellen. HOMECOURT brengt wonen, sport en beweging samen in één overzicht.</p><button class="primary" onclick="go('gym')">Start met je Home Gym →</button></div>
+ <div class="grid">
+  <div class="card"><div class="big">🏠</div><h3>Home</h3><p class="muted">Bekijk ruimtes, functies en je HOMECOURT-opzet.</p></div>
+  <div class="card"><div class="big">🏋️</div><h3>Home Gym</h3><p class="muted">Stel je ideale thuisgym samen en ontdek je Gym Score.</p></div>
+  <div class="card"><div class="big">🏆</div><h3>Build2Move</h3><p class="muted">Koppel mijlpalen aan sportieve challenges.</p></div>
+  <div class="card"><div class="big">👥</div><h3>Community</h3><p class="muted">Deel ideeën, challenges en inspiratie met anderen.</p></div>
+ </div>
+ <div class="section-title"><h2>Voorbeeld van een HOMECOURT-woning</h2><p>Een algemene demo-plattegrond — geen persoonlijke bouwtekening.</p></div>
+ <div class="floor"><div class="plan">
+  <div class="room r1" onclick="room('Woonkamer')">WOONKAMER</div><div class="room r2" onclick="room('Keuken')">KEUKEN</div>
+  <div class="room r3" onclick="room('Herstelruimte')">HERSTEL</div><div class="room r4" onclick="room('HOME GYM')">HOME GYM</div><div class="room r5" onclick="room('Sportopslag')">SPORTOPSLAG</div>
+ </div></div>
+</section>
+
+<section id="gym" class="page">
+ <div class="hero"><h1>Public Gym</h1><p>Bouw je openbare HOMECOURT-gym. Kies apparatuur en maak je eigen combinatie van kracht, conditie en mobiliteit.</p></div>
+ <div class="grid"><div class="card"><div class="muted">Gym Score</div><div id="score" class="big">0</div><div class="muted">op basis van je gekozen onderdelen</div></div><div class="card"><b>Kracht</b><div class="bar"><div id="kracht" class="fill" style="width:0%"></div></div><br><b>Conditie</b><div class="bar"><div id="cond" class="fill" style="width:0%"></div></div><br><b>Mobiliteit</b><div class="bar"><div id="mob" class="fill" style="width:0%"></div></div></div><div class="card"><b>Gym Builder Challenge</b><div id="count" class="big">0/4</div><p class="muted">Kies minimaal vier onderdelen.</p></div></div>
+ <div class="section-title"><h2>Apparatuur</h2></div><div id="equipment" class="grid"></div>
+</section>
+
+<section id="planner" class="page">
+ <div class="hero"><h1>Home Gym Planner</h1><p>Kies een ruimte en bepaal het doel. Dit is de publieke versie; persoonlijke woninggegevens blijven privé.</p></div>
+ <div class="grid">
+  <div class="card"><h3>Ruimte</h3><select id="space" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccd1d8"><option>Garage</option><option>Extra slaapkamer</option><option>Zolder</option><option>Multifunctionele ruimte</option></select></div>
+  <div class="card"><h3>Doel</h3><select id="goal" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccd1d8"><option>Kracht</option><option>Conditie</option><option>Hybride</option><option>Mobiliteit & herstel</option></select></div>
+ </div>
+ <div class="card" style="margin-top:14px"><h3>Voorbeeldindeling</h3><p class="muted" id="planText">Kies je ruimte en doel voor een eenvoudige indelingssuggestie.</p></div>
+</section>
+
+<section id="challenges" class="page">
+ <div class="hero"><h1>Build2Move</h1><p>Maak van bouw- en woonmijlpalen sportieve momenten.</p></div>
+ <div class="list">
+  <div class="card challenge"><div><b>Fundering</b><div class="muted">10 km wandelen of hardlopen</div></div><button class="primary" onclick="toggleChallenge(this)">Start</button></div>
+  <div class="card challenge"><div><b>Ruwbouw</b><div class="muted">Fietschallenge</div></div><button class="primary" onclick="toggleChallenge(this)">Start</button></div>
+  <div class="card challenge"><div><b>Afwerking</b><div class="muted">Mobiliteitssessie</div></div><button class="primary" onclick="toggleChallenge(this)">Start</button></div>
+  <div class="card challenge"><div><b>Sleuteloverdracht</b><div class="muted">HOMECOURT challenge</div></div><button class="primary" onclick="toggleChallenge(this)">Start</button></div>
+ </div>
+</section>
+
+<section id="community" class="page">
+ <div class="hero"><h1>Community</h1><p>Een plek voor inspiratie, gym-opstellingen en HOMECOURT challenges.</p></div>
+ <div class="grid"><div class="card"><h3>🔥 Populaire opstelling</h3><p class="muted">Hybride gym met rack, dumbbells, bike en mobility zone.</p></div><div class="card"><h3>💡 Idee van de week</h3><p class="muted">Ontwerp je sportkamer rondom je dagelijkse routine.</p></div><div class="card"><h3>🏆 Challenge</h3><p class="muted">Bouw je gym: kies vier onderdelen.</p></div></div>
+</section>
+
+<section id="scores" class="page">
+ <div class="hero"><h1>Scores</h1><p>Bekijk de demo-metrics van je eigen HOMECOURT-gym.</p></div>
+ <table><thead><tr><th>Onderdeel</th><th>Score</th><th>Betekenis</th></tr></thead><tbody>
+ <tr><td>Gym Score</td><td id="tableScore">0</td><td>Totale balans van je gekozen apparatuur</td></tr>
+ <tr><td>Kracht</td><td id="tableK">0%</td><td>Krachtgerichte onderdelen</td></tr>
+ <tr><td>Conditie</td><td id="tableC">0%</td><td>Cardio/conditie</td></tr>
+ <tr><td>Mobiliteit</td><td id="tableM">0%</td><td>Mobiliteit en herstel</td></tr>
+ </tbody></table>
+</section>
+</main>
+<footer>HOMECOURT — publieke demo · persoonlijke bouwtekeningen horen niet in deze omgeving.</footer>
+
 <script>
-const items=[
-['🏋️','Squat rack','kracht',3],['💪','Dumbbells','kracht',2],['🛋️','Bench','kracht',2],['🚴','Bike','cond',3],['🏃','Treadmill','cond',3],['🚣','Rower','cond',3],['🧘','Mat','mob',2],['🪞','Mobility zone','mob',2]
-];
-let chosen=JSON.parse(localStorage.getItem('hc_public_gym')||'[]');
-function render(){document.getElementById('machines').innerHTML=items.map((x,i)=>`<div class="machine ${chosen.includes(i)?'active':''}" onclick="toggle(${i})"><div class="emoji">${x[0]}</div><b>${x[1]}</b><div class="muted">${x[2]==='kracht'?'Kracht':x[2]==='cond'?'Conditie':'Mobiliteit'}</div></div>`).join('');let sums={kracht:0,cond:0,mob:0};chosen.forEach(i=>sums[items[i][2]]+=items[i][3]);let total=Math.min(10,Math.round((sums.kracht+sums.cond+sums.mob)/2));document.getElementById('score').textContent=total+'/10';let k=Math.min(100,sums.kracht*12),c=Math.min(100,sums.cond*12),m=Math.min(100,sums.mob*20);for(const [id,v] of [['kracht',k],['cond',c],['mob',m]]){document.getElementById(id).textContent=v+'%';document.getElementById(id[0]+'b').style.width=v+'%'}document.getElementById('progress').textContent=Math.min(4,chosen.length)+' / 4'}
-function toggle(i){chosen=chosen.includes(i)?chosen.filter(x=>x!==i):[...chosen,i];render()}
-function save(){localStorage.setItem('hc_public_gym',JSON.stringify(chosen));alert('Je gym is opgeslagen op dit apparaat.')}
-function clearAll(){chosen=[];localStorage.removeItem('hc_public_gym');render()}
-render()
-</script></body></html>
+const pages=[['overview','🏠 Overview'],['gym','🏋️ Home Gym'],['planner','🗺️ Planner'],['challenges','🏆 Build2Move'],['community','👥 Community'],['scores','📊 Scores']];
+const nav=document.getElementById('nav');
+pages.forEach((p,i)=>{let b=document.createElement('button');b.textContent=p[1];b.onclick=()=>go(p[0]);b.id='nav-'+p[0];nav.appendChild(b)});
+function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));document.getElementById('nav-'+id).classList.add('active');window.scrollTo(0,0)}
+function room(x){alert(x+' geselecteerd. In een volgende versie kan deze ruimte volledig configureerbaar worden.')}
+const items=[['🏋️','Squat rack','kracht',3],['💪','Dumbbells','kracht',2],['🛋️','Bench','kracht',2],['🚴','Bike','cond',3],['🏃','Treadmill','cond',3],['🚣','Rower','cond',3],['🧘','Mat','mob',2],['🪞','Mobility zone','mob',2]];
+let selected=JSON.parse(localStorage.getItem('hc_public_gym')||'[]');
+const eq=document.getElementById('equipment');
+items.forEach((x,i)=>{let d=document.createElement('label');d.className='equip';d.innerHTML=`<input type="checkbox" data-i="${i}" ${selected.includes(i)?'checked':''}><span style="font-size:24px">${x[0]}</span><span><b>${x[1]}</b><br><small class="muted">${x[2]}</small></span>`;eq.appendChild(d)});
+eq.querySelectorAll('input').forEach(c=>c.addEventListener('change',update));
+function update(){selected=[...eq.querySelectorAll('input:checked')].map(x=>+x.dataset.i);localStorage.setItem('hc_public_gym',JSON.stringify(selected));let vals={kracht:0,cond:0,mob:0};selected.forEach(i=>vals[items[i][2]]+=items[i][3]);let score=Math.min(100,Math.round((vals.kracht+vals.cond+vals.mob)/20*100));let k=Math.min(100,vals.kracht/7*100),co=Math.min(100,vals.cond/9*100),m=Math.min(100,vals.mob/4*100);document.getElementById('score').textContent=score;document.getElementById('count').textContent=Math.min(selected.length,4)+'/4';document.getElementById('kracht').style.width=k+'%';document.getElementById('cond').style.width=co+'%';document.getElementById('mob').style.width=m+'%';document.getElementById('tableScore').textContent=score;document.getElementById('tableK').textContent=Math.round(k)+'%';document.getElementById('tableC').textContent=Math.round(co)+'%';document.getElementById('tableM').textContent=Math.round(m)+'%'}
+function toggleChallenge(btn){btn.textContent=btn.textContent==='Start'?'Gestart ✓':'Start';btn.closest('.card').classList.toggle('done')}
+function planner(){let s=document.getElementById('space').value,g=document.getElementById('goal').value;document.getElementById('planText').textContent=`Voor ${s} met focus op ${g}: houd een duidelijke vrije zone, plaats vaste apparatuur langs de wand en reserveer ruimte voor opslag en herstel.`}
+document.getElementById('space').onchange=planner;document.getElementById('goal').onchange=planner;
+go('overview');update();
+</script>
+</body>
+</html>
